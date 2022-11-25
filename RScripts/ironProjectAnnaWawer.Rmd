@@ -1,0 +1,232 @@
+---
+title: "ironProjectAnnaWawer"
+author: "Melanie Smith"
+date: "13/10/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE,
+    message = FALSE,
+    warning = FALSE,
+    cache = FALSE,
+    fig.align = "center"
+)
+```
+
+```{r include=FALSE}
+
+###################################################
+#                 Load Libraries                  #
+###################################################
+
+# Data manipulation
+library(dplyr)
+library(magrittr)
+library(reshape2)
+library(readr)
+library(tibble)
+library(readxl)
+
+# Visualisation
+library(ggplot2)
+library(ggrepel)
+library(RColorBrewer)
+library(knitr)
+library(kableExtra)
+library(plotly)
+
+# file locations
+library(here)
+
+###################################################
+#              Set ggplot theme                   #
+###################################################
+
+theme_set(theme_bw() +
+            theme(text = element_text(size=18)) +
+  theme(axis.text.x = element_text(colour = "black",
+                                   face = "bold"),
+        axis.text.y = element_text(colour = "black",
+                                   face = "bold")) +
+  theme(axis.title.x = element_text(colour = "black",
+                                   face = "bold"),
+        axis.title.y = element_text(colour = "black",
+                                   face = "bold")))
+
+###################################################
+#                   Directories                   #
+###################################################
+
+dataFolder <- "~/Bioinformatics/dataRepo"
+
+###################################################
+#             User Defined Functions              #
+###################################################
+
+# Negate the magrittr %in% function
+`%notin%` <- Negate(`%in%`)
+
+# REDCap import
+source(file.path(here("RScripts", "redcap_api_import.R")))
+
+```
+
+## Iron analysis {.tabset}
+### Import the metadata files
+
+```{r import STOP, warning=FALSE, error=FALSE, message=FALSE, results=FALSE}
+
+# variables I want
+STOP_variables <- c("participant_id", "f1_age",
+                    "f1_lmp", "f4_ethnicity",
+                    "f5_menarche", "f7_anaemia_yr", 
+                    "f7_anaemia_med", "f9_wgt",
+                    "f9_hgt", "f9_bmi", 
+                    "f9_hb", "f9_ferritin",
+                    "f9_b12", "f9_vitd",
+                    "f21_est_blood_loss", "f22_gestw_del",
+                    "f31_outcome_combination",
+                    "f21_delivery_date_time")
+
+
+# STOP (REDCap import)
+STOP_raw_dat <- read.csv(file.path(
+  dataFolder, "STOPStudy_DATA_2021-04-23_1151.csv"
+  ),
+                         header = TRUE)
+
+STOP_raw_dict <- read.csv(file.path(
+  dataFolder,"STOPStudy_DataDictionary_2021-04-23.csv"
+  ),
+                          header = TRUE)
+# do the funky Shalem things
+STOP_raw <- apply_data_dict(STOP_raw_dat,STOP_raw_dict)
+table(STOP_raw$final_data) #use final data subset (N=1300) only
+
+# add the gestational age for blood collection
+GAsampling <- read_csv(file.path(dataFolder, "SCOPE+STOP_GAsamp.csv")) %>% 
+  dplyr::filter(., Study == "STOP") %>% 
+  dplyr::mutate(., samplename = paste0(
+    "STP", stringr::str_pad(Study.ID, width = 4, pad = "0")
+  ))
+
+# subset for the variables we want
+subsetSTOP <- dplyr::select(STOP_raw, final_data, all_of(STOP_variables)) %>%
+  # drop samples not in the final data subset
+  dplyr::filter(., final_data == "Yes") %>% 
+  # sort by ID
+  dplyr::arrange(., participant_id) %>% 
+  # add a samplename column that matches the rest of my data
+  dplyr::mutate(., samplename = paste0(
+    "STP", stringr::str_pad(participant_id, width = 4, pad = "0"))
+    ) %>%
+  dplyr::left_join(., GAsampling[, c("samplename", "GA_samp")],
+                   by = "samplename") %>% 
+  # make samplename the first column
+  dplyr::select(., samplename, everything(), -final_data, -participant_id)
+
+# Import the data with freezer sample info
+freezerPlacenta <- read_csv(
+  file = file.path(dataFolder, "STOP_placentaFreezerSamples.csv")) %>% 
+  # add a samplename column that matches the rest of my data
+  dplyr::mutate(., samplename = paste0(
+    "STP", stringr::str_pad(Patient_ID, width = 4, pad = "0")))
+# drop samples that have been removed from the freezer
+freezerPlacenta <-  dplyr::filter(freezerPlacenta, sampleRemoved == 0)
+
+# remove women with missing data
+secondSubsetSTOP <- subsetSTOP[complete.cases(
+  subsetSTOP[, c("f9_ferritin", "f9_hb")]), ] # %>% 
+  # remove women outside of the maternal age, BMI or gestational age range
+  # I've given us 10% either side to broaden the range
+  # dplyr::filter(., between(f1_age, 19*.9, 40*1.1)) %>% 
+  # dplyr::filter(., between(f9_bmi, 20.6*.9, 51.1*1.1)) %>% 
+  # dplyr::filter(., between(f22_gestw_del, 37*.9, 41.6*1.1))
+
+# remove women without frozen placenta tissue
+thirdSubsetSTOP <- subset(secondSubsetSTOP,
+                          samplename %in% unique(freezerPlacenta$samplename))
+
+# Add column for samples we alreay have sequencing for
+# import PE sample data
+PE_placenta_meta <- read_csv(
+  file.path(dataFolder, "PlacentaGroup_Sample_information.csv")) 
+# keep the STOP IDs
+STOP_PE_placenta_meta <- dplyr::filter(PE_placenta_meta, cohort == "STOP")
+
+# import GDM sample data
+GDM_placenta_meta <- read_csv(
+  file.path(dataFolder, "GDM_metadata_cleaned.csv")) 
+# add a samplename column that matches the rest of my data
+GDM_placenta_meta %<>% dplyr::mutate(., samplename = paste0(
+    "STP", stringr::str_pad(ID, width = 4, pad = "0")))
+# keep the STOP IDs
+STOP_GDM_placenta_meta <- dplyr::filter(GDM_placenta_meta, Cohort == "STOP")
+
+# add column to the metadata 0=not sequenced before; 1=sequenced before
+fourthSubsetSTOP <- thirdSubsetSTOP %>%
+  dplyr::mutate(., sequencedBefore = ifelse(
+    thirdSubsetSTOP$samplename %in% 
+      c(STOP_GDM_placenta_meta$samplename, STOP_PE_placenta_meta$samplename),
+    1, 0))
+
+# import the UR conversion table
+convertSTOP_UR <- read_csv(file.path(dataFolder, "convertSTOP_UR.csv")) %>% 
+  # add column with samplename in proper format
+  dplyr::mutate(., samplename = paste0(
+    "STP", stringr::str_pad(STOP_ID, width = 4, pad = "0")
+  ))
+
+# new DF including the patient UR
+fourthSubsetSTOP_UR <- dplyr::left_join(
+  fourthSubsetSTOP,
+  convertSTOP_UR[, c("maternalUR", "samplename")],
+  by = "samplename") %>% 
+  # rename and reorder columns
+  dplyr::select(., samplename, maternalUR, sequencedBefore,
+                maternalAge = f1_age, 
+                gestationalAgeDelivery = f22_gestw_del,
+                gestationalAgeBloodTest = GA_samp, 
+                f9_ferritin, f9_hb, f9_b12, f9_vitd,
+                everything()) %>% 
+  dplyr::arrange(., sequencedBefore)
+
+# write the table to file for Anna
+library("writexl")
+write_xlsx(fourthSubsetSTOP_UR,
+           here("cleanData/fourthSubsetSTOP_UR.xlsx"))
+
+```
+
+### data dictionary table
+
+```{r data dictionary table}
+
+STOP_subsetDataDic <- subset(
+  STOP_raw_dict, Variable...Field.Name %in% STOP_variables)
+
+STOP_subsetDataDic %>%
+  # head(50) %>%
+  kableExtra::kable() %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(height = "600px")
+
+```
+
+### metadata table final subset
+
+<br/>
+- The STOP cohort has `r dim(secondSubsetSTOP)[1]` women inside the maternal age, maternal BMI and gestational age at delivery window. Of these, `r dim(thirdSubsetSTOP)[1]` have frozen tissue available. Note that `r dim(dplyr::filter(fourthSubsetSTOP, sequencedBefore == 1))[1]` tissue samples have been sequenced previously, leaving `r dim(dplyr::filter(fourthSubsetSTOP, sequencedBefore == 0))[1]` unsequenced samples.
+<br/>
+
+```{r metadata table fourth subset}
+
+fourthSubsetSTOP %>%
+  # head(50) %>%
+  kableExtra::kable() %>%
+  kableExtra::kable_styling() %>%
+  kableExtra::scroll_box(height = "600px")
+
+```
