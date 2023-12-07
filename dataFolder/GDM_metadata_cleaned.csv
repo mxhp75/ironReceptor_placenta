@@ -1,0 +1,47 @@
+ID,Cohort,Age,FetalSex,Ethnicity,GestationalAge,BMI,Outcome,metabolicSyndrome,GDM_tx,Treatment,Ethnicity_Simplified,Smoking,Birthweight,BMI_cat,filename
+1038,STOP,25,Female,Caucasian,39.29,24.8,Uncomplicated,No,none,none,Caucasian,NA,3420,Normal,STP_PlacRNA_1038_S36
+1039,STOP,26,Male,Middle-eastern,41.57,27.2,Uncomplicated,No,none,none,non-Caucasian,NA,3790,Overweight,STP_PlacRNA_1039_S37
+1044,STOP,31,Female,Caucasian,38.86,45.9,GDM,Yes,Metformin and insulin,Medicated,Caucasian,No,3850,Obese,STP_PlacRNA_1044_S38
+1046,STOP,22,Male,Caucasian,41,26.2,Uncomplicated,No,none,none,Caucasian,Yes,3140,Overweight,STP_PlacRNA_1046_S39
+1050,STOP,25,Male,South_East_and_Far_East,40.14,31.2,GDM,Yes,Diet only,Diet-Exercise,non-Caucasian,Yes,3264,Obese,STP_PlacRNA_1050_S40
+1070,STOP,35,Male,Caucasian,39,37.5,GDM,Yes,Diet only,Diet-Exercise,Caucasian,Yes,3210,Obese,STP_PlacRNA_1070_S41
+1080,STOP,28,Male,Caucasian,38.14,44.3,GDM,No,Insulin,Medicated,Caucasian,Yes,4595,Obese,STP_PlacRNA_1080_S42
+1111,STOP,17,Male,Caucasian,41.43,20.7,Uncomplicated,No,none,none,Caucasian,Yes,3820,Normal,STP_PlacRNA_1111_S43
+1114,STOP,33,Female,Caucasian,38.71,27.4,GDM,No,Diet only,Diet-Exercise,Caucasian,No,2885,Overweight,STP_PlacRNA_1114_S44
+1154,STOP,30,Male,South_East_and_Far_East,39,24.6,GDM,No,Diet only,Diet-Exercise,non-Caucasian,No,3805,Normal,STP_PlacRNA_1154_S45
+0012,STOP,29,Female,Indian_subcontinent,40.29,21.3,GDM,No,Diet only,Diet-Exercise,non-Caucasian,NA,3010,Normal,STP_PlacRNA_0012_S11
+1205,STOP,29,Female,Caucasian,40.71,26.7,GDM,No,none,none,Caucasian,No,4208,Overweight,STP_PlacRNA_1205_S47
+0018,STOP,21,Male,Caucasian,41.43,21.8,Uncomplicated,No,none,none,Caucasian,No,3715,Normal,STP_PlacRNA_0018_S12
+0267,STOP,37,Male,Caucasian,38.86,33.9,GDM,No,Diet only,Diet-Exercise,Caucasian,Yes,3305,Obese,STP_PlacRNA_0267_S15
+2822,SCOPE,32,Female,Caucasian,37.57,32.3,GDM,No,Insulin,Medicated,Caucasian,No,2790,Obese,SCP_PlacRNA_2822_S1
+2953,SCOPE,28,Female,Caucasian,38.43,35.8,GDM,Yes,Insulin,Medicated,Caucasian,No,3346,Obese,SCP_PlacRNA_2953_S2
+0373,STOP,21,Female,Caucasian,40.57,30.3,Uncomplicated,No,none,none,Caucasian,NA,3096,Obese,STP_PlacRNA_0373_S16
+4023,SCOPE,28,Male,Caucasian,40,28.4,GDM,Yes,Insulin,Medicated,Caucasian,No,3265,Overweight,SCP_PlacRNA_4023_S3
+4119,SCOPE,25,Male,African,39.71,35.1,Uncomplicated,No,none,none,non-Caucasian,Yes,3514,Obese,SCP_PlacRNA_4119_S5
+4129,SCOPE,29,Female,Caucasian,41.71,30.9,Uncomplicated,No,none,none,Caucasian,No,3895,Obese,SCP_PlacRNA_4129_S6
+4130,SCOPE,25,Female,Caucasian,39,30.9,Uncomplicated,No,none,none,Caucasian,No,3900,Obese,SCP_PlacRNA_4130_S7
+4176,SCOPE,26,Female,Caucasian,39.43,21.7,GDM,No,Insulin,Medicated,Caucasian,No,3745,Normal,SCP_PlacRNA_4176_S8
+4259,SCOPE,34,Female,Caucasian,40,35.6,GDM,No,Insulin,Medicated,Caucasian,No,3255,Obese,SCP_PlacRNA_4259_S10
+4536,SCOPE,22,Female,Caucasian,40.57,24.6,Uncomplicated,No,none,none,Caucasian,No,3550,Normal,SCP_PlacRNA_4536_S4
+4706,SCOPE,22,Female,Caucasian,39.43,27.6,Uncomplicated,No,none,none,Caucasian,Yes,3065,Overweight,SCP_PlacRNA_4706_S9
+0510,STOP,21,Male,Middle-eastern,38.57,24.5,Uncomplicated,No,none,none,non-Caucasian,NA,3220,Normal,STP_PlacRNA_0510_S17
+0554,STOP,28,Female,Caucasian,40,19.7,Uncomplicated,No,none,none,Caucasian,No,3790,Normal,STP_PlacRNA_0554_S18
+0558,STOP,33,Male,African_subcontinent,41.57,29.6,Uncomplicated,No,none,none,non-Caucasian,No,3488,Overweight,STP_PlacRNA_0558_S19
+0623,STOP,22,Female,South_East_and_Far_East,39,24.5,GDM,Yes,Diet only,Diet-Exercise,non-Caucasian,NA,3435,Normal,STP_PlacRNA_0623_S20
+0635,STOP,35,Male,Caucasian,38.29,33.2,GDM,No,Insulin,Medicated,Caucasian,NA,3290,Obese,STP_PlacRNA_0635_S21
+0658,STOP,29,Female,China_and_Japan,39.29,22.3,Uncomplicated,No,none,none,non-Caucasian,No,2760,Normal,STP_PlacRNA_0658_S22
+0677,STOP,21,Female,Caucasian,37.71,52.4,GDM,Yes,Diet only,Diet-Exercise,Caucasian,Yes,3308,Obese,STP_PlacRNA_0677_S23
+0678,STOP,26,Female,Caucasian,39,22.6,Uncomplicated,No,none,none,Caucasian,No,3076,Normal,STP_PlacRNA_0678_S24
+0681,STOP,17,Female,African_subcontinent,38.57,21.3,GDM,No,Diet only,Diet-Exercise,non-Caucasian,NA,2830,Normal,STP_PlacRNA_0681_S25
+0700,STOP,30,Female,Indian_subcontinent,39.14,26.3,GDM,No,Insulin,Medicated,non-Caucasian,No,3345,Overweight,STP_PlacRNA_0700_S26
+0713,STOP,22,Male,Caucasian,41.29,30.9,Uncomplicated,No,none,none,Caucasian,No,3540,Obese,STP_PlacRNA_0713_S27
+0075,STOP,26,Male,Caucasian,39.14,25.4,Uncomplicated,No,none,none,Caucasian,No,3020,Overweight,STP_PlacRNA_0075_S13
+0786,STOP,20,Male,Caucasian,41.14,40.5,Uncomplicated,No,none,none,Caucasian,No,3350,Obese,STP_PlacRNA_0786_S28
+0830,STOP,24,Male,Caucasian,40.14,29.7,Uncomplicated,No,none,none,Caucasian,Yes,3325,Overweight,STP_PlacRNA_0830_S29
+0838,STOP,37,Female,Indian_subcontinent,39.57,24.3,GDM,No,Diet only,Diet-Exercise,non-Caucasian,No,2996,Normal,STP_PlacRNA_0838_S30
+0085,STOP,26,Female,Caucasian,37.43,17.9,GDM,No,Diet only,Diet-Exercise,Caucasian,No,3380,Normal,STP_PlacRNA_0085_S14
+0881,STOP,29,Male,Caucasian,40.57,33.7,GDM,No,Diet only,Diet-Exercise,Caucasian,NA,3680,Obese,STP_PlacRNA_0881_S31
+0925,STOP,26,Female,Caucasian,40.57,26.3,Uncomplicated,No,none,none,Caucasian,NA,3320,Overweight,STP_PlacRNA_0925_S32
+0989,STOP,30,Male,Caucasian,38.86,36.9,Uncomplicated,No,none,none,Caucasian,Yes,3040,Obese,STP_PlacRNA_0989_S33
+0993,STOP,27,Female,Caucasian,39,30.6,Uncomplicated,No,none,none,Caucasian,NA,3415,Obese,STP_PlacRNA_0993_S34
+0994,STOP,24,Male,Caucasian,38.29,28.2,GDM,Yes,Insulin,Medicated,Caucasian,Yes,3742,Overweight,STP_PlacRNA_0994_S35
