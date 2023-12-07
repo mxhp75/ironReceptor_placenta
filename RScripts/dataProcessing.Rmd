@@ -64,7 +64,7 @@ theme_set(theme_bw() +
 projectDir <- "/home/smit1924/ironReceptor_placenta"
 
 input_raw_counts <- file.path(projectDir, "rawData/SAGCQA0492_readCounts.txt")
-
+input_filename_convert <- file.path(projectDir, "rawData/20230405_jointMetaData.csv")
 
 outputDir <- file.path(projectDir, "cleanData")
 dataFolder <- file.path(projectDir, "dataFolder")
@@ -80,6 +80,19 @@ dataFolder <- file.path(projectDir, "dataFolder")
 source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
 ```
 
+# Import sample metadata
+
+```{r}
+# import STOP metadata
+
+flinders_placentas_and_bloods_17_11_2022_aw <- read_excel("rawData/flinders_placentas_and_bloods_17_11_2022_aw.xlsx")
+View(flinders_placentas_and_bloods_17_11_2022_aw)
+# import LMH metadata
+
+# import combined file name to study ID conversion table
+filename_convert <- read_csv(input_filename_convert, col_names = TRUE)
+```
+
 # Import raw count data
 
 ```{r}
@@ -88,6 +101,9 @@ rawCounts <- read.delim(file = input_raw_counts) %>%
   as.data.frame() %>%
   # remove the 'undetermined' column
   dplyr::select(., -X.scratch.user.smit1924.annaWaverIronProject.aligned_data.Undetermined_GRCh38_Aligned.sortedByCoord.out.bam) %>%
+  # remove the sequencing blank `SAGCFN_22_01736`
+  dplyr::select(., -X.scratch.user.smit1924.annaWaverIronProject.aligned_data.SAGCFN_22_01736_S71_GRCh38_Aligned.sortedByCoord.out.bam) %>%
+  # move the gene IDs to the rownames
   tibble::column_to_rownames("Geneid")
 
 # tidy up the column names
@@ -95,19 +111,4 @@ colnames(rawCounts) <- gsub("X.scratch.user.smit1924.annaWaverIronProject.aligne
                                  _GRCh38_Aligned.sortedByCoord.out.bam",
                                  "",
                                  colnames(rawCounts))
-
-SAGCFN_22_01736_S71_GRCh38_Aligned.sortedByCoord.out.bam
-
-
 ```
-
-# Import sample metadata
-
-```{r}
-# import STOP metadata
-library(readxl)
-flinders_placentas_and_bloods_17_11_2022_aw <- read_excel("rawData/flinders_placentas_and_bloods_17_11_2022_aw.xlsx")
-View(flinders_placentas_and_bloods_17_11_2022_aw)
-# import LMH metadata
-```
-
