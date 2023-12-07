@@ -15,6 +15,15 @@ knitr::opts_chunk$set(
 )
 ```
 
+This RScript is the first in the collaboration with Anna and Burnd.  
+Here I will inspect the STOP metadata and create a table of sample IDs suitable for Anna's Iron Infusion Project.  
+The process of inclusion is as follows:  
+  - Import all recorded data and data dictionary for the STOP project  
+  - Subset the metadata to include only  
+    - variables related to bloods, blood loss, vitamins, iron, pregnancy outcome  
+    - women for whom we have frozen placenta samples  
+    - women who match the required age and BMI range  
+
 ```{r include=FALSE}
 
 ###################################################
