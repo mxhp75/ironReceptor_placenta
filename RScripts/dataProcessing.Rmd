@@ -1,0 +1,113 @@
+---
+title: "Sequence Data Processing"
+author: "Melanie Smith"
+date: "7 December 2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE,
+    message = FALSE,
+    warning = FALSE,
+    cache = FALSE,
+    fig.align = "center"
+)
+```
+
+This RScript is the second in the collaboration with Anna and Burnd.  
+Here I will inspect the sequencing data derived from the STOP and LMH (Anna's Iron Infusion Project) placentas.  
+
+
+```{r include=FALSE}
+
+###################################################
+#                 Load Libraries                  #
+###################################################
+
+# Data manipulation
+library(dplyr)
+library(magrittr)
+library(reshape2)
+library(readr)
+library(tibble)
+library(readxl)
+
+# Visualisation
+library(ggplot2)
+library(ggrepel)
+library(RColorBrewer)
+library(knitr)
+library(kableExtra)
+library(plotly)
+
+
+###################################################
+#              Set ggplot theme                   #
+###################################################
+
+theme_set(theme_bw() +
+            theme(text = element_text(size=18)) +
+  theme(axis.text.x = element_text(colour = "black",
+                                   face = "bold"),
+        axis.text.y = element_text(colour = "black",
+                                   face = "bold")) +
+  theme(axis.title.x = element_text(colour = "black",
+                                   face = "bold"),
+        axis.title.y = element_text(colour = "black",
+                                   face = "bold")))
+
+###################################################
+#                   Directories                   #
+###################################################
+
+projectDir <- "/home/smit1924/ironReceptor_placenta"
+
+input_raw_counts <- file.path(projectDir, "rawData/SAGCQA0492_readCounts.txt")
+
+
+outputDir <- file.path(projectDir, "cleanData")
+dataFolder <- file.path(projectDir, "dataFolder")
+
+
+###################################################
+#             User Defined Functions              #
+###################################################
+
+# Negate the magrittr %in% function
+`%notin%` <- Negate(`%in%`)
+# REDCap import
+source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
+```
+
+# Import raw count data
+
+```{r}
+# import counts
+rawCounts <- read.delim(file = input_raw_counts) %>%
+  as.data.frame() %>%
+  # remove the 'undetermined' column
+  dplyr::select(., -X.scratch.user.smit1924.annaWaverIronProject.aligned_data.Undetermined_GRCh38_Aligned.sortedByCoord.out.bam) %>%
+  tibble::column_to_rownames("Geneid")
+
+# tidy up the column names
+colnames(rawCounts) <- gsub("X.scratch.user.smit1924.annaWaverIronProject.aligned_data.|_S.*|
+                                 _GRCh38_Aligned.sortedByCoord.out.bam",
+                                 "",
+                                 colnames(rawCounts))
+
+SAGCFN_22_01736_S71_GRCh38_Aligned.sortedByCoord.out.bam
+
+
+```
+
+# Import sample metadata
+
+```{r}
+# import STOP metadata
+library(readxl)
+flinders_placentas_and_bloods_17_11_2022_aw <- read_excel("rawData/flinders_placentas_and_bloods_17_11_2022_aw.xlsx")
+View(flinders_placentas_and_bloods_17_11_2022_aw)
+# import LMH metadata
+```
+
