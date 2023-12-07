@@ -59,7 +59,12 @@ theme_set(theme_bw() +
 #                   Directories                   #
 ###################################################
 
-dataFolder <- "~/Bioinformatics/dataRepo"
+projectDir <- "/home/smit1924/ironReceptor_placenta"
+
+inputDir <- file.path(projectDir, "rawData")
+outputDir <- file.path(projectDir, "cleanData")
+dataFolder <- file.path(projectDir, "dataFolder")
+
 
 ###################################################
 #             User Defined Functions              #
@@ -67,16 +72,14 @@ dataFolder <- "~/Bioinformatics/dataRepo"
 
 # Negate the magrittr %in% function
 `%notin%` <- Negate(`%in%`)
-
 # REDCap import
-source(file.path(here("RScripts", "redcap_api_import.R")))
-
+source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
 ```
 
 ## Iron analysis {.tabset}
 ### Import the metadata files
 
-```{r import STOP, warning=FALSE, error=FALSE, message=FALSE, results=FALSE}
+```{r import STOP}
 
 # variables I want
 STOP_variables <- c("participant_id", "f1_age",
@@ -195,8 +198,8 @@ fourthSubsetSTOP_UR <- dplyr::left_join(
 
 # write the table to file for Anna
 library("writexl")
-write_xlsx(fourthSubsetSTOP_UR,
-           here("cleanData/fourthSubsetSTOP_UR.xlsx"))
+# write_xlsx(fourthSubsetSTOP_UR,
+#            here("cleanData/fourthSubsetSTOP_UR.xlsx"))
 
 ```
 
