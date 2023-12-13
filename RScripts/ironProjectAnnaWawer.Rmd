@@ -82,7 +82,7 @@ dataFolder <- file.path(projectDir, "dataFolder")
 # Negate the magrittr %in% function
 `%notin%` <- Negate(`%in%`)
 # REDCap import
-source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
+source(file.path(projectDir, "RScripts/redcap_api_import.R"))
 ```
 
 ## Iron analysis {.tabset}
@@ -94,11 +94,14 @@ source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
 STOP_variables <- c("participant_id", "f1_age",
                     "f1_lmp", "f4_ethnicity",
                     "f5_menarche", "f7_anaemia_yr", 
-                    "f7_anaemia_med", "f9_wgt",
+                    "f7_anaemia_med", "f8_cig_1st_trim",
+                    "f9_wgt",
                     "f9_hgt", "f9_bmi", 
                     "f9_hb", "f9_ferritin",
                     "f9_b12", "f9_vitd",
+                    "f13_diab_int",
                     "f21_est_blood_loss", "f22_gestw_del",
+                    "f22_birthwgt",
                     "f31_outcome_combination",
                     "f21_delivery_date_time")
 
