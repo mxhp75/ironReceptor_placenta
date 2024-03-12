@@ -65,6 +65,9 @@ projectDir <- "/home/smit1924/ironReceptor_placenta"
 
 input_raw_counts <- file.path(projectDir, "rawData/SAGCQA0492_readCounts.txt")
 input_filename_convert <- file.path(projectDir, "rawData/20230405_jointMetaData.csv")
+input_filename_flinders_placentas_bloods <- file.path(projectDir, "rawData/flinders_placentas_and_bloods_17_11_2022_aw.xlsx")
+input_filename_lmh_placentas_bloods <- file.path(projectDir, "rawData/20230405_LMH_metaData.csv")
+input_filename_fourthSubsetSTOP <- file.path(projectDir, "cleanData/fourthSubsetSTOP_UR.xlsx")
 
 outputDir <- file.path(projectDir, "cleanData")
 dataFolder <- file.path(projectDir, "dataFolder")
@@ -83,14 +86,31 @@ source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
 # Import sample metadata
 
 ```{r}
-# import STOP metadata
-
-flinders_placentas_and_bloods_17_11_2022_aw <- read_excel("rawData/flinders_placentas_and_bloods_17_11_2022_aw.xlsx")
-View(flinders_placentas_and_bloods_17_11_2022_aw)
-# import LMH metadata
-
 # import combined file name to study ID conversion table
 filename_convert <- read_csv(input_filename_convert, col_names = TRUE)
+# import STOP metadata
+flinders_placentas_and_bloods_20221117 <- read_excel(input_filename_flinders_placentas_bloods)
+# import LMH metadata
+LMH_metaData_20230405 <- read_csv(input_filename_lmh_placentas_bloods) %>%
+  # keep only columns that match the flinders metadata
+  dplyr::select(., "ULN", "studyno", "f1_age", "f9_hgt", "f9_wgt", "f9_bmi", "f4_ethnicity", "f22_birthwgt", "f21_est_blood_loss", "f22_sex", "f22_gestw_del", "f21_del_mode")
+
+# import some extra STOP metadata
+fourthSubsetSTOP <- read_excel(input_filename_fourthSubsetSTOP)
+
+```
+
+## combine metadata
+```{r}
+
+temp1 <- fourthSubsetSTOP %>%
+  dplyr::left_join(., filename_convert, by =  "samplename") %>%
+  dplyr::select(., samplename, f22_sex, ULN)  %>%
+  dplyr::filter(!is.na(ULN))
+
+female <- dplyr::filter(temp1, f22_sex == "Female")
+male <- dplyr::filter(temp1, f22_sex == "Male")
+
 ```
 
 # Import raw count data

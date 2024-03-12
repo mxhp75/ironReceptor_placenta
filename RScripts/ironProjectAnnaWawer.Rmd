@@ -37,6 +37,7 @@ library(reshape2)
 library(readr)
 library(tibble)
 library(readxl)
+library("writexl")
 
 # Visualisation
 library(ggplot2)
@@ -103,7 +104,8 @@ STOP_variables <- c("participant_id", "f1_age",
                     "f21_est_blood_loss", "f22_gestw_del",
                     "f22_birthwgt",
                     "f31_outcome_combination",
-                    "f21_delivery_date_time")
+                    "f21_delivery_date_time",
+                    "f22_sex")
 
 
 # STOP (REDCap import)
@@ -209,9 +211,9 @@ fourthSubsetSTOP_UR <- dplyr::left_join(
   dplyr::arrange(., sequencedBefore)
 
 # write the table to file for Anna
-library("writexl")
 # write_xlsx(fourthSubsetSTOP_UR,
 #            here("cleanData/fourthSubsetSTOP_UR.xlsx"))
+
 
 ```
 
