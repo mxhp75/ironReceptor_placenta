@@ -3,13 +3,13 @@
 ## Script to run STAR with gene and transcript level counts ##
 ## Requires STAR index to be pre-prepared ##
 ## Melanie Smith ##
-## 20231206 ##
+## 20240313 ##
 
 ##--------------------------------------------------------------------------------------------##
 ## set project root directory
 ##--------------------------------------------------------------------------------------------##
 
-PROJROOT=/scratch/user/smit1924/20231206_GDM_male_grch38
+PROJROOT=/scratch/user/smit1924/ironReceptor_placenta/fastqProcessing
 
 ##--------------------------------------------------------------------------------------------##
 ## set project sub-directories
@@ -18,8 +18,14 @@ PROJROOT=/scratch/user/smit1924/20231206_GDM_male_grch38
 mkdir -p ${PROJROOT}/aligned_data
 
 refs=/scratch/user/smit1924/refSeq # all the reference datasets are here
-TRIMFQ=${PROJROOT}/trim_data    # the trimmed fastq files are here
-ALIGN_OUTPUT=${PROJROOT}/aligned_data	# put the aligned data here
+TRIMFQ=${PROJROOT}/maleOutput/trim_data    # the trimmed fastq files are here
+ALIGN_OUTPUT=${PROJROOT}/maleOutput/aligned_data	# put the aligned data here
+
+##--------------------------------------------------------------------------------------------##
+## create align_data sub-directory
+##--------------------------------------------------------------------------------------------##
+
+mkdir -p ${PROJROOT}/maleOutput/aligned_data
 
 ##--------------------------------------------------------------------------------------------##
 ## Check the aligned data directory exists, else exit with error
