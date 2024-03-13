@@ -9,14 +9,14 @@
 #SBATCH --mem=80GB
 
 # Notification configuration
-#SBATCH --job-name=20231206_GDM_female_starAlign
+#SBATCH --job-name=20240313_ironProject_femaleAlign
 #SBATCH --mail-type=END
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=melanie.smith@flinders.edu.au
 
 
 ## Melanie Smith ##
-## 20231206 ##
+## 20240313 ##
 
 ## Script for running STAR alignment ##
 ## To be run on DeepThought ##
@@ -40,7 +40,7 @@ module load Miniconda3/4.9.2
 ## Assign variables
 ##--------------------------------------------------------------------------------------------##
 
-PROJROOT=/scratch/user/smit1924/20231206_GDM_female_grch38
+PROJROOT=/scratch/user/smit1924/ironReceptor_placenta/fastqProcessing
 
 ##--------------------------------------------------------------------------------------------##
 ## Run STAR alignment
@@ -48,6 +48,6 @@ PROJROOT=/scratch/user/smit1924/20231206_GDM_female_grch38
 
 conda activate STAR
 
-bash ${PROJROOT}/scripts/02_starAlign.sh
+bash ${PROJROOT}/femaleScripts/02_starAlign.sh
 
 conda deactivate
