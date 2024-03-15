@@ -1,8 +1,0 @@
-Found /scratch/user/smit1924/ironReceptor_placenta/fastqProcessing/femaleOutput/aligned_data 
-
-!!!!! WARNING:  Could not ls /*_R1_001_trim.fastq.gz
-
-EXITING: because of fatal INPUT file error: could not open read file: /*_R1_001_trim.fastq.gz
-SOLUTION: check that this file exists and has read permision.
-
-Mar 13 09:54:49 ...... FATAL ERROR, exiting

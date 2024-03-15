@@ -18,7 +18,7 @@ PROJROOT=/scratch/user/smit1924/ironReceptor_placenta/fastqProcessing
 mkdir -p ${PROJROOT}/aligned_data
 
 refs=/scratch/user/smit1924/refSeq # all the reference datasets are here
-TRIMFC=${PROJROOT}/femaleOutput/trim_data    # the trimmed fastq files are here
+TRIMFQ=${PROJROOT}/femaleOutput/trim_data    # the trimmed fastq files are here
 ALIGN_OUTPUT=${PROJROOT}/femaleOutput/aligned_data	# put the aligned data here
 
 ##--------------------------------------------------------------------------------------------##

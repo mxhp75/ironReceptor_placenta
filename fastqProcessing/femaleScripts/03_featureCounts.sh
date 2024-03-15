@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 ## Melanie Smith ##
-## 20231206 ##
+## 20240315 ##
 
 ## Script for assigning genomic features to `sortByCoordOut.bam` files using subread/featureCounts ##
 ## To be run on DeepThought ##
@@ -12,7 +12,7 @@
 ## Assign project root variables
 ##--------------------------------------------------------------------------------------------#o
 
-PROJROOT=/scratch/user/smit1924/20231206_GDM_female_grch38
+PROJROOT=/scratch/user/smit1924/ironReceptor_placenta
 
 ##--------------------------------------------------------------------------------------------##
 ## set number of threads
@@ -24,8 +24,8 @@ cores=16
 ## set project sub-directories
 ##--------------------------------------------------------------------------------------------##
 
-alignOutput=${PROJROOT}/aligned_data   # the aligned data is here
-readCounts=${PROJROOT}/read_counts # put the count files here
+alignOutput=${PROJROOT}/fastqProcessing/femaleOutput/aligned_data   # the aligned data is here
+readCounts=${PROJROOT}/fastqProcessing/femaleOutput/read_counts # put the count files here
 
 ##--------------------------------------------------------------------------------------------##
 ## set reference file
@@ -50,7 +50,7 @@ echo -e "Found ${PROJROOT}\n"
 
 if [[ ! -d ${readCounts} ]]
   then
-	mkdir -p ${PROJROOT}/read_counts
+	mkdir -p ${PROJROOT}/fastqProcessing/femaleOutput/read_counts
 fi
 echo -e "Found ${readCounts}\n"
 
@@ -66,7 +66,7 @@ featureCounts -Q 10 -p --countReadPairs -g gene_id --fracOverlap 1 -T ${cores} -
 
 ## Storing the output in a single file
 cut -f1,7- ${readCounts}/counts.out | \
-   sed 1d > ${readCounts}/20231206_GDM_female_readCounts.txt
+   sed 1d > ${readCounts}/20240315_ironProject_female_readCounts.txt
 
 
 
