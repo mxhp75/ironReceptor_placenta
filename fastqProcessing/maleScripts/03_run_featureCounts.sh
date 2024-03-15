@@ -9,14 +9,14 @@
 #SBATCH --mem=16GB
 
 # Notification configuration
-#SBATCH --job-name=20231206_GDM_male_featureCounts
+#SBATCH --job-name=20240315_ironProject_male_featureCounts
 #SBATCH --mail-type=END
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=melanie.smith@flinders.edu.au
 
 
 ## Melanie Smith ##
-## 20231206 ##
+## 20240315 ##
 
 ## Script for running Feature Counts ##
 ## To be run on DeepThought ##
@@ -41,7 +41,7 @@ module load Miniconda3/4.9.2
 ## Assigni project root variables
 ##--------------------------------------------------------------------------------------------##
 
-PROJROOT=/scratch/user/smit1924/20231206_GDM_male_grch38
+PROJROOT=/scratch/user/smit1924/ironReceptor_placenta
 
 ##--------------------------------------------------------------------------------------------##
 ## Run samtools sort
@@ -49,6 +49,6 @@ PROJROOT=/scratch/user/smit1924/20231206_GDM_male_grch38
 
 conda activate featureCounts # this is featureCounts v2.0.3
 
-bash ${PROJROOT}/scripts/03_featureCounts.sh
+bash ${PROJROOT}/fastqProcessing/maleScripts/03_featureCounts.sh
 
 conda deactivate
