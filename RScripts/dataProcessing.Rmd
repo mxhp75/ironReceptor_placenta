@@ -110,10 +110,11 @@ fourthSubsetSTOP <- read_excel(input_filename_fourthSubsetSTOP)
 STOP <- fourthSubsetSTOP %>%
   dplyr::left_join(., filename_convert, by =  "samplename") %>%
   dplyr::select(., samplename, ULN, f9_hgt, f9_wgt, f9_bmi, f4_ethnicity, f22_birthwgt, f21_est_blood_loss, f22_sex)  %>%
-  dplyr::filter(!is.na(ULN))
+  dplyr::filter(!is.na(ULN)) %>%
+  distinct(., samplename, .keep_all = TRUE)
 
-female <- dplyr::filter(temp1, f22_sex == "Female")
-male <- dplyr::filter(temp1, f22_sex == "Male")
+female <- dplyr::filter(STOP, f22_sex == "Female")
+male <- dplyr::filter(STOP, f22_sex == "Male")
 
 ```
 
