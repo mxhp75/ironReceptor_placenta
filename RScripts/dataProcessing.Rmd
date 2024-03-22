@@ -69,6 +69,8 @@ input_filename_flinders_placentas_bloods <- file.path(projectDir, "rawData/flind
 input_filename_lmh_placentas_bloods <- file.path(projectDir, "rawData/20230405_LMH_metaData.csv")
 input_filename_fourthSubsetSTOP <- file.path(projectDir, "cleanData/fourthSubsetSTOP_UR.xlsx")
 
+metadata_out_file <- file.path(projectDir, "cleanData/ironReceptor_metadata.csv")
+
 outputDir <- file.path(projectDir, "cleanData")
 dataFolder <- file.path(projectDir, "dataFolder")
 
@@ -100,19 +102,41 @@ fourthSubsetSTOP <- read_excel(input_filename_fourthSubsetSTOP)
 
 ```
 
-## combine metadata
+# Combined metadata
+## STOP filename convert
+
 ```{r}
 
-temp1 <- fourthSubsetSTOP %>%
+STOP <- fourthSubsetSTOP %>%
   dplyr::left_join(., filename_convert, by =  "samplename") %>%
-  dplyr::select(., samplename, f22_sex, ULN)  %>%
-  dplyr::filter(!is.na(ULN))
+  dplyr::select(., samplename, ULN, f9_hgt, f9_wgt, f9_bmi, f4_ethnicity, f22_birthwgt, f21_est_blood_loss, f22_sex)  %>%
+  dplyr::filter(!is.na(ULN)) %>%
+  distinct(., samplename, .keep_all = TRUE)
 
-female <- dplyr::filter(temp1, f22_sex == "Female")
-male <- dplyr::filter(temp1, f22_sex == "Male")
+female <- dplyr::filter(STOP, f22_sex == "Female")
+male <- dplyr::filter(STOP, f22_sex == "Male")
 
 ```
 
+```{r}
+LMH <- LMH_metaData_20230405 %>%
+    dplyr::mutate(., samplename = paste0("LMH", stringr::str_pad(studyno, width = 4, pad = "0"))) %>%
+  dplyr::select(., samplename, ULN, f9_hgt, f9_wgt, f9_bmi, f4_ethnicity, f22_birthwgt, f21_est_blood_loss, f22_sex)
+```
+
+## Combine the metadata
+
+```{r}
+combined_metadata <- rbind(STOP, LMH)
+
+```
+
+```{r}
+# save a csv of the combined raw counts table
+write_csv(combined_metadata,
+          file = metadata_out_file,
+          col_names = TRUE)
+```
 # Import raw count data
 
 ```{r}
