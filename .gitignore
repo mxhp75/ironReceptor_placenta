@@ -3,10 +3,10 @@
 *.fastq.gz
 
 # docker/Apptainer image files
-/scratch/user/smit1924/ironReceptor_placenta/cibersortx/fractions_latest.sif
+cibersortx/fractions_latest.sif
 
 # large signature file used by Cibersortx
-/scratch/user/smit1924/ironReceptor_placenta/cibersortx/data/GSE182381_reference_sample.txt
+cibersortx/data/GSE182381_reference_sample.txt
 
 # # slurm output
 *.out
