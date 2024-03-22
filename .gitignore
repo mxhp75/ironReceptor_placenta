@@ -2,6 +2,15 @@
 *.fastq
 *.fastq.gz
 
+# docker/Apptainer image files
+*.sif
+
+# large signature file used by Cibersortx
+GSE182381_reference_sample.txt
+
+# # slurm output
+*.out
+
 # History files
 .Rhistory
 .Rapp.history
