@@ -3,10 +3,13 @@
 *.fastq.gz
 
 # docker/Apptainer image files
-cibersortx/fractions_latest.sif
-
+./cibersortx/fractions_latest.sif
+*.sif
+./cibersort/*.sif
 # large signature file used by Cibersortx
-cibersortx/data/GSE182381_reference_sample.txt
+./cibersortx/data/GSE182381_reference_sample.txt
+./cibersortx/data/*.txt
+*GSE182381_reference_sample.txt
 
 # # slurm output
 *.out
