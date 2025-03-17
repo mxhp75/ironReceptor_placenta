@@ -61,7 +61,7 @@ theme_set(theme_bw() +
 #                   Directories                   #
 ###################################################
 
-projectDir <- "/home/smit1924/ironReceptor_placenta"
+projectDir <- "D:/VM_Projects/ironReceptor_placenta" # needs the "windows style" directory path (D:)
 
 input_raw_counts <- file.path(projectDir, "rawData/SAGCQA0492_readCounts.txt")
 input_filename_convert <- file.path(projectDir, "rawData/20230405_jointMetaData.csv")
@@ -81,6 +81,7 @@ dataFolder <- file.path(projectDir, "dataFolder")
 
 # Negate the magrittr %in% function
 `%notin%` <- Negate(`%in%`)
+
 # REDCap import
 source(file.path(projectDir, "RScripts", "redcap_api_import.R"))
 ```
